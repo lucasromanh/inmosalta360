@@ -123,7 +123,7 @@ export const authService = {
   // Restablecer contraseña
   async resetPassword(data: ResetPasswordData): Promise<void> {
     await new Promise(resolve => setTimeout(resolve, 1000));
-    console.log('Password reset successfully');
+    console.log('Password reset successfully for:', data.token);
   },
 
   // Cambiar contraseña
@@ -139,6 +139,7 @@ export const authService = {
   // Refrescar token
   async refreshToken(refreshToken: string): Promise<AuthResponse> {
     await new Promise(resolve => setTimeout(resolve, 500));
+    console.log('Refreshing token:', refreshToken.substring(0, 10) + '...');
     return {
       user: HARDCODED_USER,
       token: 'new-fake-jwt-token-' + Date.now(),
@@ -149,7 +150,7 @@ export const authService = {
   // Verificar email
   async verifyEmail(token: string): Promise<void> {
     await new Promise(resolve => setTimeout(resolve, 1000));
-    console.log('Email verified successfully');
+    console.log('Email verified successfully for token:', token.substring(0, 10) + '...');
   },
 
   // Reenviar verificación de email

@@ -428,7 +428,7 @@ const Dashboard: React.FC = () => {
                     <span className="bg-green-100 text-green-800 text-xs font-medium px-2.5 py-0.5 rounded-full">En vivo</span>
                   </div>
                   <div className="space-y-4">
-                    {mockData.recentActivities.map((activity, index) => (
+                    {mockData.recentActivities.map((activity) => (
                       <div key={activity.id} className="flex items-center space-x-4 p-4 bg-gray-50 rounded-xl hover:bg-gray-100 transition-colors">
                         <div className={`w-10 h-10 rounded-full flex items-center justify-center ${
                           activity.type === 'inquiry' ? 'bg-blue-100' : 
