@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import L from 'leaflet';
+import { useAuth } from '../../hooks/useAuth';
 
 // Fix para los iconos de Leaflet
 import markerIcon from 'leaflet/dist/images/marker-icon.png';
@@ -85,6 +86,7 @@ const mockPropertiesWithLocations = [
 ];
 
 const MapView: React.FC = () => {
+  const { user } = useAuth();
   const [selectedProperty, setSelectedProperty] = useState<number | null>(null);
   const [showFilters, setShowFilters] = useState(false);
   const [filters, setFilters] = useState({
@@ -118,12 +120,29 @@ const MapView: React.FC = () => {
               <h1 className="text-3xl font-bold text-gray-900">🗺️ Mapa de Propiedades</h1>
               <p className="text-gray-600 mt-1">Explora propiedades en Salta Capital</p>
             </div>
-            <Link 
-              to="/admin" 
-              className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors"
-            >
-              ← Volver al Dashboard
-            </Link>
+            <div className="flex space-x-3">
+              <Link 
+                to="/propiedades" 
+                className="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition-colors"
+              >
+                📋 Ver Propiedades
+              </Link>
+              {user ? (
+                <Link 
+                  to="/admin" 
+                  className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors"
+                >
+                  🏠 Dashboard
+                </Link>
+              ) : (
+                <Link 
+                  to="/login" 
+                  className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors"
+                >
+                  👤 Iniciar Sesión
+                </Link>
+              )}
+            </div>
           </div>
         </div>
       </div>
@@ -294,29 +313,52 @@ const MapView: React.FC = () => {
                       key={property.id}
                       position={[property.lat, property.lng]}
                     >
-                      <Popup>
-                        <div className="p-2 min-w-[200px]">
+                      <Popup maxWidth={280} minWidth={250}>
+                        <div className="p-3 min-w-[250px]">
+                          <div className="mb-2">
+                            <span className="bg-blue-100 text-blue-800 text-xs font-medium px-2 py-1 rounded">
+                              {property.type}
+                            </span>
+                          </div>
+                          
                           <img 
                             src={property.image} 
                             alt={property.title}
-                            className="w-full h-24 object-cover rounded mb-2"
+                            className="w-full h-32 object-cover rounded-lg mb-3 shadow-sm"
                           />
-                          <h3 className="font-bold text-sm text-gray-900 mb-1">{property.title}</h3>
-                          <p className="text-xs text-gray-600 mb-2">{property.location}</p>
-                          <div className="flex justify-between items-center text-xs mb-2">
-                            <span>{property.bedrooms} hab</span>
-                            <span>{property.bathrooms} baños</span>
-                            <span>{property.area} m²</span>
+                          
+                          <h3 className="font-bold text-base text-gray-900 mb-1 leading-tight">
+                            {property.title}
+                          </h3>
+                          <p className="text-sm text-gray-600 mb-3 flex items-center">
+                            <span className="mr-1">📍</span>
+                            {property.location}
+                          </p>
+                          
+                          <div className="grid grid-cols-3 gap-2 mb-3 text-center">
+                            <div className="bg-gray-50 p-2 rounded">
+                              <div className="text-xs text-gray-500">Habitaciones</div>
+                              <div className="font-semibold text-sm">🛏️ {property.bedrooms}</div>
+                            </div>
+                            <div className="bg-gray-50 p-2 rounded">
+                              <div className="text-xs text-gray-500">Baños</div>
+                              <div className="font-semibold text-sm">🚿 {property.bathrooms}</div>
+                            </div>
+                            <div className="bg-gray-50 p-2 rounded">
+                              <div className="text-xs text-gray-500">Área</div>
+                              <div className="font-semibold text-sm">📐 {property.area}m²</div>
+                            </div>
                           </div>
-                          <div className="flex justify-between items-center">
-                            <span className="text-lg font-bold text-blue-600">
+                          
+                          <div className="flex items-center justify-between">
+                            <span className="text-xl font-bold text-blue-600">
                               ${property.price.toLocaleString()}
                             </span>
                             <Link 
                               to={`/propiedad/${property.id}`}
-                              className="bg-blue-600 text-white px-2 py-1 rounded text-xs hover:bg-blue-700"
+                              className="bg-blue-600 text-white px-4 py-2 rounded-lg text-sm hover:bg-blue-700 transition-colors font-medium"
                             >
-                              Ver más
+                              Ver detalles
                             </Link>
                           </div>
                         </div>

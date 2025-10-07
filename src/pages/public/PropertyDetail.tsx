@@ -137,17 +137,28 @@ const PropertyDetail: React.FC = () => {
                     <div className="text-sm text-gray-600">{property.agent.email}</div>
                   </div>
                   
-                  <button className="w-full bg-blue-600 text-white py-3 px-4 rounded-lg hover:bg-blue-700 mb-3">
-                    Llamar ahora
-                  </button>
+                  <a 
+                    href={`tel:${property.agent.phone}`}
+                    className="w-full bg-blue-600 text-white py-3 px-4 rounded-lg hover:bg-blue-700 mb-3 inline-block text-center transition-colors"
+                  >
+                    📞 Llamar ahora
+                  </a>
                   
-                  <button className="w-full bg-white text-blue-600 border border-blue-600 py-3 px-4 rounded-lg hover:bg-blue-50 mb-3">
-                    WhatsApp
-                  </button>
+                  <a 
+                    href={`https://wa.me/${property.agent.phone.replace(/[^\d]/g, '')}?text=Hola, estoy interesado en la propiedad "${property.title}" (ID: ${property.id})`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="w-full bg-green-500 text-white py-3 px-4 rounded-lg hover:bg-green-600 mb-3 inline-block text-center transition-colors"
+                  >
+                    💬 WhatsApp
+                  </a>
                   
-                  <button className="w-full bg-gray-800 text-white py-3 px-4 rounded-lg hover:bg-gray-900">
-                    Solicitar visita
-                  </button>
+                  <a 
+                    href={`mailto:${property.agent.email}?subject=Consulta sobre ${property.title}&body=Hola,%0A%0AEstoy interesado en la propiedad "${property.title}" (ID: ${property.id}).%0A%0AMe gustaría solicitar una visita.%0A%0AGracias.`}
+                    className="w-full bg-gray-800 text-white py-3 px-4 rounded-lg hover:bg-gray-900 inline-block text-center transition-colors"
+                  >
+                    📧 Solicitar visita
+                  </a>
                 </div>
               </div>
             </div>

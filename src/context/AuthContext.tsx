@@ -26,13 +26,26 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
+    // Limpiar localStorage al inicio para testing - REMOVER EN PRODUCCIÓN
+    localStorage.removeItem("user");
+    localStorage.removeItem("token");
+    localStorage.removeItem("refreshToken");
+    
     const localUser = localStorage.getItem("user");
     const token = localStorage.getItem("token");
     
     if (localUser && token) {
       try {
         const parsedUser = JSON.parse(localUser);
-        setUser(parsedUser);
+        // Validar que el usuario tenga propiedades requeridas
+        if (parsedUser && parsedUser.email && parsedUser.name) {
+          setUser(parsedUser);
+        } else {
+          // Usuario inválido, limpiar
+          localStorage.removeItem("user");
+          localStorage.removeItem("token");
+          localStorage.removeItem("refreshToken");
+        }
       } catch (error) {
         console.error('Error parseando usuario del localStorage:', error);
         // Limpiar localStorage si hay error
