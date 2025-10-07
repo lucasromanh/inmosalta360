@@ -1,0 +1,50 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --color-primary: #1A3A5F;
+    --color-secondary: #F2C94C;
+    --color-accent: #E57373;
+    --color-neutral: #F9FAFB;
+  }
+
+  body {
+    background-color: var(--color-neutral);
+    color: #374151;
+    font-family: Inter, sans-serif;
+  }
+}
+
+@layer utilities {
+  .text-primary {
+    color: var(--color-primary);
+  }
+  
+  .bg-primary {
+    background-color: var(--color-primary);
+  }
+  
+  .bg-primary:hover {
+    background-color: color-mix(in srgb, var(--color-primary) 90%, black);
+  }
+  
+  .text-secondary {
+    color: var(--color-secondary);
+  }
+  
+  .bg-secondary {
+    background-color: var(--color-secondary);
+  }
+  
+  .text-accent {
+    color: var(--color-accent);
+  }
+  
+  .bg-accent {
+    background-color: var(--color-accent);
+  }
+  
+  .bg-neutral {
+    background-color: var(--color-neutral);
+  }
+}
