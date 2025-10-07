@@ -1,4 +1,4 @@
-import { apiRequest } from './api';
+import apiRequest from './api';
 
 export interface Client {
   id: string;
@@ -65,42 +65,49 @@ export const clientService = {
     }
     
     const url = `/clients${params.toString() ? `?${params.toString()}` : ''}`;
-    return apiRequest.get<Client[]>(url);
+    const response = await apiRequest.get<Client[]>(url);
+    return response.data;
   },
 
   // Obtener cliente por ID
   getById: async (id: string): Promise<Client> => {
-    return apiRequest.get<Client>(`/clients/${id}`);
+    const response = await apiRequest.get<Client>(`/clients/${id}`);
+    return response.data;
   },
 
   // Crear nuevo cliente
   create: async (clientData: CreateClientData): Promise<Client> => {
-    return apiRequest.post<Client>('/clients', clientData);
+    const response = await apiRequest.post<Client>('/clients', clientData);
+    return response.data;
   },
 
   // Actualizar cliente existente
   update: async (id: string, clientData: UpdateClientData): Promise<Client> => {
-    return apiRequest.put<Client>(`/clients/${id}`, clientData);
+    const response = await apiRequest.put<Client>(`/clients/${id}`, clientData);
+    return response.data;
   },
 
   // Eliminar cliente
   delete: async (id: string): Promise<void> => {
-    return apiRequest.delete(`/clients/${id}`);
+    await apiRequest.delete(`/clients/${id}`);
   },
 
   // Agregar propiedad a intereses del cliente
   addInterest: async (clientId: string, propertyId: string): Promise<Client> => {
-    return apiRequest.post<Client>(`/clients/${clientId}/interests`, { propertyId });
+    const response = await apiRequest.post<Client>(`/clients/${clientId}/interests`, { propertyId });
+    return response.data;
   },
 
   // Quitar propiedad de intereses del cliente
   removeInterest: async (clientId: string, propertyId: string): Promise<Client> => {
-    return apiRequest.delete<Client>(`/clients/${clientId}/interests/${propertyId}`);
+    const response = await apiRequest.delete<Client>(`/clients/${clientId}/interests/${propertyId}`);
+    return response.data;
   },
 
   // Obtener interacciones de un cliente
   getInteractions: async (clientId: string): Promise<ClientInteraction[]> => {
-    return apiRequest.get<ClientInteraction[]>(`/clients/${clientId}/interactions`);
+    const response = await apiRequest.get<ClientInteraction[]>(`/clients/${clientId}/interactions`);
+    return response.data;
   },
 
   // Agregar nueva interacción
@@ -108,7 +115,8 @@ export const clientService = {
     clientId: string,
     interaction: Omit<ClientInteraction, 'id' | 'clientId' | 'createdBy'>
   ): Promise<ClientInteraction> => {
-    return apiRequest.post<ClientInteraction>(`/clients/${clientId}/interactions`, interaction);
+    const response = await apiRequest.post<ClientInteraction>(`/clients/${clientId}/interactions`, interaction);
+    return response.data;
   },
 
   // Obtener estadísticas de clientes
@@ -119,12 +127,8 @@ export const clientService = {
     leads: number;
     newThisMonth: number;
   }> => {
-    return apiRequest.get('/clients/stats');
-  },
-
-  // Buscar clientes por criterios
-  search: async (query: string): Promise<Client[]> => {
-    return apiRequest.get<Client[]>(`/clients/search?q=${encodeURIComponent(query)}`);
+    const response = await apiRequest.get('/clients/stats');
+    return response.data;
   },
 
   // Exportar lista de clientes
@@ -140,6 +144,7 @@ export const clientService = {
     }
     
     const url = `/clients/export${params.toString() ? `?${params.toString()}` : ''}`;
-    return apiRequest.get(url);
+    const response = await apiRequest.get(url, { responseType: 'blob' });
+    return response.data;
   },
 };

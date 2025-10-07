@@ -1,5 +1,10 @@
-import React, { InputHTMLAttributes, forwardRef } from 'react';
-import { cn } from '../../utils/cn';
+import React, { forwardRef } from 'react';
+import type { InputHTMLAttributes } from 'react';
+
+// Fallback cn utility if ../../utils/cn is missing
+function cn(...classes: (string | false | undefined)[]) {
+  return classes.filter(Boolean).join(' ');
+}
 
 interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   label?: string;
@@ -23,15 +28,15 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
     },
     ref
   ) => {
-    const inputId = id || `input-${Math.random().toString(36).substr(2, 9)}`;
+    const inputId = id || `input-${Math.random().toString(36).slice(2, 11)}`;
 
     const inputStyles = cn(
       'block w-full rounded-md border-gray-300 shadow-sm transition-colors',
       'focus:border-primary-500 focus:ring-primary-500 focus:ring-1',
       'disabled:bg-gray-50 disabled:text-gray-500 disabled:cursor-not-allowed',
       error && 'border-red-500 focus:border-red-500 focus:ring-red-500',
-      icon && iconPosition === 'left' && 'pl-10',
-      icon && iconPosition === 'right' && 'pr-10',
+      icon && iconPosition === 'left' ? 'pl-10' : undefined,
+      icon && iconPosition === 'right' ? 'pr-10' : undefined,
       className
     );
 

@@ -1,4 +1,4 @@
-import { apiRequest } from './api';
+import apiRequest from './api';
 
 export interface Property {
   id: string;
@@ -70,27 +70,31 @@ export const propertyService = {
     }
     
     const url = `/properties${params.toString() ? `?${params.toString()}` : ''}`;
-    return apiRequest.get<Property[]>(url);
+    const response = await apiRequest.get<Property[]>(url);
+    return response.data;
   },
 
   // Obtener una propiedad por ID
   getById: async (id: string): Promise<Property> => {
-    return apiRequest.get<Property>(`/properties/${id}`);
+    const response = await apiRequest.get<Property>(`/properties/${id}`);
+    return response.data;
   },
 
-  // Crear nueva propiedad
+  // Crear una nueva propiedad
   create: async (propertyData: CreatePropertyData): Promise<Property> => {
-    return apiRequest.post<Property>('/properties', propertyData);
+    const response = await apiRequest.post<Property>('/properties', propertyData);
+    return response.data;
   },
 
   // Actualizar propiedad existente
   update: async (id: string, propertyData: UpdatePropertyData): Promise<Property> => {
-    return apiRequest.put<Property>(`/properties/${id}`, propertyData);
+    const response = await apiRequest.put<Property>(`/properties/${id}`, propertyData);
+    return response.data;
   },
 
   // Eliminar propiedad
   delete: async (id: string): Promise<void> => {
-    return apiRequest.delete(`/properties/${id}`);
+    await apiRequest.delete(`/properties/${id}`);
   },
 
   // Subir imágenes de propiedad
@@ -99,23 +103,29 @@ export const propertyService = {
     files.forEach((file, index) => {
       formData.append(`images[${index}]`, file);
     });
-
-    return apiRequest.post<string[]>(`/properties/${propertyId}/images`, formData);
+    const response = await apiRequest.post<string[]>(`/properties/${propertyId}/images`, formData);
+    return response.data;
   },
 
   // Obtener propiedades destacadas
   getFeatured: async (): Promise<Property[]> => {
-    return apiRequest.get<Property[]>('/properties/featured');
+    const response = await apiRequest.get<Property[]>('/properties/featured');
+    return response.data;
   },
 
   // Obtener estadísticas de propiedades
   getStats: async (): Promise<{
-    total: number;
     available: number;
     sold: number;
     rented: number;
     byType: Record<Property['type'], number>;
   }> => {
-    return apiRequest.get('/properties/stats');
+    const response = await apiRequest.get<{
+      available: number;
+      sold: number;
+      rented: number;
+      byType: Record<Property['type'], number>;
+    }>('/properties/stats');
+    return response.data;
   },
 };

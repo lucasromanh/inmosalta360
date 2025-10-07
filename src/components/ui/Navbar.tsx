@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
-import { cn } from '../../utils/cn';
+
+// Simple utility to join class names
+function cn(...classes: (string | undefined | false | null)[]) {
+  return classes.filter(Boolean).join(' ');
+}
 
 interface NavbarProps {
   title?: string;

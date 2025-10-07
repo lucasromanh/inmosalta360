@@ -1,14 +1,8 @@
 # 🏠 InmoSalta360# React + TypeScript + Vite
 
-
-
 **Plataforma inmobiliaria completa para Salta Capital**This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
-
-
 Una aplicación web moderna desarrollada con React + TypeScript que ofrece una experiencia completa para la gestión y búsqueda de propiedades inmobiliarias en Salta, Argentina.Currently, two official plugins are available:
-
-
 
 ## ✨ Características Principales- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
 
@@ -26,8 +20,6 @@ Una aplicación web moderna desarrollada con React + TypeScript que ofrece una e
 
 - **Responsive Design**: Optimizado para desktop, tablet y móvil## Expanding the ESLint configuration
 
-
-
 ### 🎛️ Para AdministradoresIf you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
 
 - **Dashboard Profesional**: Panel de control con métricas y estadísticas
@@ -36,51 +28,49 @@ Una aplicación web moderna desarrollada con React + TypeScript que ofrece una e
 
 - **Sistema de Notificaciones**: Alertas en tiempo real de consultas y actividadexport default defineConfig([
 
-- **Analytics Avanzado**: KPIs, análisis por zona y predicciones de mercado  globalIgnores(['dist']),
+- **Analytics Avanzado**: KPIs, análisis por zona y predicciones de mercado globalIgnores(['dist']),
 
-- **CRM Integrado**: Gestión de clientes y seguimiento de leads  {
+- **CRM Integrado**: Gestión de clientes y seguimiento de leads {
 
-    files: ['**/*.{ts,tsx}'],
+  files: ['**/*.{ts,tsx}'],
 
-## 🚀 Tecnologías    extends: [
+## 🚀 Tecnologías extends: [
 
       // Other configs...
 
 ### Frontend
 
-- **React 19.1.1** - Framework principal      // Remove tseslint.configs.recommended and replace with this
+- **React 19.1.1** - Framework principal // Remove tseslint.configs.recommended and replace with this
 
-- **TypeScript** - Tipado estático      tseslint.configs.recommendedTypeChecked,
+- **TypeScript** - Tipado estático tseslint.configs.recommendedTypeChecked,
 
-- **Vite 7.1.9** - Build tool y development server      // Alternatively, use this for stricter rules
+- **Vite 7.1.9** - Build tool y development server // Alternatively, use this for stricter rules
 
-- **React Router DOM 7.9.3** - Enrutamiento SPA      tseslint.configs.strictTypeChecked,
+- **React Router DOM 7.9.3** - Enrutamiento SPA tseslint.configs.strictTypeChecked,
 
-- **TailwindCSS 4.1.14** - Framework de estilos      // Optionally, add this for stylistic rules
+- **TailwindCSS 4.1.14** - Framework de estilos // Optionally, add this for stylistic rules
 
-- **Axios** - Cliente HTTP para APIs      tseslint.configs.stylisticTypeChecked,
+- **Axios** - Cliente HTTP para APIs tseslint.configs.stylisticTypeChecked,
 
+### Arquitectura // Other configs...
 
+- **Hooks personalizados** para lógica reutilizable ],
 
-### Arquitectura      // Other configs...
+- **Context API** para gestión de estado global languageOptions: {
 
-- **Hooks personalizados** para lógica reutilizable    ],
+- **Componentes modulares** y reutilizables parserOptions: {
 
-- **Context API** para gestión de estado global    languageOptions: {
+- **Rutas protegidas** con autenticación project: ['./tsconfig.node.json', './tsconfig.app.json'],
 
-- **Componentes modulares** y reutilizables      parserOptions: {
-
-- **Rutas protegidas** con autenticación        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-
-- **Responsive design** mobile-first        tsconfigRootDir: import.meta.dirname,
+- **Responsive design** mobile-first tsconfigRootDir: import.meta.dirname,
 
       },
 
-## 🛠️ Instalación y Configuración      // other options...
+## 🛠️ Instalación y Configuración // other options...
 
     },
 
-### Prerrequisitos  },
+### Prerrequisitos },
 
 - Node.js 18+ ])
 
@@ -92,7 +82,7 @@ You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-re
 
 ### Instalación
 
-```js
+````js
 
 1. **Clonar el repositorio**// eslint.config.js
 
@@ -147,18 +137,20 @@ npm run dev        # Servidor de desarrollo```
 npm run build      # Build para producción
 npm run preview    # Preview del build
 npm run lint       # Linter de código
-```
+````
 
 ## 🎯 Funcionalidades Destacadas
 
 ### 📊 Dashboard Administrativo
+
 - **Métricas en tiempo real**: Propiedades, consultas, contratos, ingresos
-- **Sistema de notificaciones**: Campana clickeable con alertas contextuales  
+- **Sistema de notificaciones**: Campana clickeable con alertas contextuales
 - **Tabs organizadas**: Overview, Analytics avanzado, Gestión de propiedades
 - **Quick Actions**: Accesos rápidos a funciones principales
 - **Gestión de usuario**: Perfil, configuración y logout
 
 ### 🗺️ Mapa Interactivo
+
 - **Visualización geográfica** de todas las propiedades
 - **Marcadores clickeables** con información detallada
 - **Filtros dinámicos** por tipo y rango de precio
@@ -166,6 +158,7 @@ npm run lint       # Linter de código
 - **Sidebar con lista** sincronizada con el mapa
 
 ### 🏠 Gestión de Propiedades
+
 - **Formulario completo** con validaciones
 - **Galería de imágenes** múltiple
 - **Características detalladas**: dormitorios, baños, superficie
@@ -177,6 +170,7 @@ npm run lint       # Linter de código
 Sistema de autenticación simulado para desarrollo:
 
 **Credenciales de prueba:**
+
 - **Email**: lucas@mail.com
 - **Password**: 12341234
 

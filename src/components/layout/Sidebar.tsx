@@ -49,9 +49,36 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose, className = '' }) =>
         </svg>
       ),
       children: [
-        { id: 'all-properties', label: 'Todas las Propiedades', href: '/panel/propiedades' },
-        { id: 'add-property', label: 'Agregar Propiedad', href: '/panel/propiedades/nueva' },
-        { id: 'featured-properties', label: 'Destacadas', href: '/panel/propiedades/destacadas' },
+        {
+          id: 'all-properties',
+          label: 'Todas las Propiedades',
+          href: '/panel/propiedades',
+          icon: (
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 10h16M4 14h16M4 18h16" />
+            </svg>
+          ),
+        },
+        {
+          id: 'add-property',
+          label: 'Agregar Propiedad',
+          href: '/panel/propiedades/nueva',
+          icon: (
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+            </svg>
+          ),
+        },
+        {
+          id: 'featured-properties',
+          label: 'Destacadas',
+          href: '/panel/propiedades/destacadas',
+          icon: (
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 17.75L18.2 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.44 4.73L5.8 21z" />
+            </svg>
+          ),
+        },
       ],
     },
     {
