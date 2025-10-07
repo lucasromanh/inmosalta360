@@ -9,6 +9,7 @@ import Clients from "../pages/admin/Clients";
 import Reports from "../pages/admin/Reports";
 import Login from "../pages/auth/Login";
 import Register from "../pages/auth/Register";
+import PrivateRoute from "./PrivateRoute";
 
 const AppRouter = () => (
   <BrowserRouter>
@@ -20,10 +21,10 @@ const AppRouter = () => (
       <Route path="/contacto" element={<div className="p-8 bg-white min-h-screen"><h1 className="text-2xl font-bold text-gray-900">Página de Contacto - En desarrollo</h1></div>} />
       <Route path="/login" element={<Login />} />
       <Route path="/registro" element={<Register />} />
-      <Route path="/admin" element={<Dashboard />} />
-      <Route path="/admin/crm" element={<Clients />} />
-      <Route path="/admin/propiedades/nueva" element={<AddProperty />} />
-      <Route path="/admin/reportes" element={<Reports />} />
+      <Route path="/admin" element={<PrivateRoute><Dashboard /></PrivateRoute>} />
+      <Route path="/admin/crm" element={<PrivateRoute><Clients /></PrivateRoute>} />
+      <Route path="/admin/propiedades/nueva" element={<PrivateRoute><AddProperty /></PrivateRoute>} />
+      <Route path="/admin/reportes" element={<PrivateRoute><Reports /></PrivateRoute>} />
     </Routes>
   </BrowserRouter>
 );
