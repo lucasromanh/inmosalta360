@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { useAuth } from '../../hooks/useAuth';
+import AdminLayout from '../../components/layout/AdminLayout';
 
 // Datos de ejemplo
 const mockProperties = [
@@ -39,37 +39,29 @@ const mockProperties = [
   }
 ];
 
-const PropertyList: React.FC = () => {
-  const { user } = useAuth();
-
-
-
+const AdminPropertyList: React.FC = () => {
   return (
-    <div className="min-h-screen bg-gray-50">
-      <div className="container mx-auto px-4 py-8">
-        <div className="mb-8">
-          <div className="flex items-center justify-between mb-4">
-            <Link to="/" className="text-blue-600 hover:text-blue-800">
-              ← Volver al inicio
-            </Link>
-            <div className="flex space-x-3">
-              <Link to="/mapa" className="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition-colors">
-                🗺️ Ver en Mapa
-              </Link>
-              
-              {user ? (
-                <Link to="/admin" className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors">
-                  🏠 Dashboard
-                </Link>
-              ) : (
-                <Link to="/login" className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors">
-                  👤 Iniciar Sesión
-                </Link>
-              )}
-            </div>
+    <AdminLayout>
+      <div className="space-y-6">
+        <div className="flex items-center justify-between">
+          <div>
+            <h1 className="text-2xl font-bold text-gray-900">Propiedades</h1>
+            <p className="text-gray-600">Gestiona todas las propiedades disponibles</p>
           </div>
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">Propiedades Disponibles</h1>
-          <p className="text-gray-600">Encuentra tu propiedad ideal en Salta</p>
+          <div className="flex space-x-3">
+            <Link 
+              to="/admin/propiedades/nueva" 
+              className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors"
+            >
+              ➕ Nueva Propiedad
+            </Link>
+            <Link 
+              to="/mapa" 
+              className="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition-colors"
+            >
+              🗺️ Ver en Mapa
+            </Link>
+          </div>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -99,12 +91,20 @@ const PropertyList: React.FC = () => {
                   <span className="text-2xl font-bold text-blue-600">
                     ${property.price.toLocaleString()}
                   </span>
-                  <Link 
-                    to={`/propiedad/${property.id}`}
-                    className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 text-sm"
-                  >
-                    Ver detalles
-                  </Link>
+                  <div className="flex space-x-2">
+                    <Link 
+                      to={`/propiedad/${property.id}`}
+                      className="bg-gray-600 text-white px-3 py-2 rounded hover:bg-gray-700 text-sm"
+                    >
+                      👁️ Ver
+                    </Link>
+                    <button className="bg-blue-600 text-white px-3 py-2 rounded hover:bg-blue-700 text-sm">
+                      ✏️ Editar
+                    </button>
+                    <button className="bg-red-600 text-white px-3 py-2 rounded hover:bg-red-700 text-sm">
+                      🗑️
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>
@@ -112,17 +112,17 @@ const PropertyList: React.FC = () => {
         </div>
 
         <div className="mt-12 text-center">
-          <p className="text-gray-600 mb-4">¿No encontraste lo que buscabas?</p>
+          <p className="text-gray-600 mb-4">¿Necesitas más funciones?</p>
           <Link 
-            to="/contacto" 
+            to="/admin/reportes" 
             className="bg-gray-800 text-white px-6 py-3 rounded-lg hover:bg-gray-900"
           >
-            Contáctanos
+            📊 Ver Reportes
           </Link>
         </div>
       </div>
-    </div>
+    </AdminLayout>
   );
 };
 
-export default PropertyList;
+export default AdminPropertyList;

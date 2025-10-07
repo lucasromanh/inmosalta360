@@ -1,5 +1,19 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
+import L from 'leaflet';
+
+// Fix para los iconos de Leaflet
+import markerIcon from 'leaflet/dist/images/marker-icon.png';
+import markerShadow from 'leaflet/dist/images/marker-shadow.png';
+import markerRetina from 'leaflet/dist/images/marker-icon-2x.png';
+
+delete (L.Icon.Default.prototype as any)._getIconUrl;
+L.Icon.Default.mergeOptions({
+  iconUrl: markerIcon,
+  iconRetinaUrl: markerRetina,
+  shadowUrl: markerShadow,
+});
 
 // Mock data para propiedades con ubicaciones en Salta
 const mockPropertiesWithLocations = [
@@ -72,6 +86,7 @@ const mockPropertiesWithLocations = [
 
 const MapView: React.FC = () => {
   const [selectedProperty, setSelectedProperty] = useState<number | null>(null);
+  const [showFilters, setShowFilters] = useState(false);
   const [filters, setFilters] = useState({
     type: 'all',
     priceRange: 'all'
@@ -114,9 +129,77 @@ const MapView: React.FC = () => {
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        {/* Overlay de filtros para móvil */}
+        {showFilters && (
+          <div className="fixed inset-0 bg-black/50 z-40 lg:hidden" onClick={() => setShowFilters(false)}>
+            <div className="absolute top-4 left-4 right-4 max-h-[80vh] overflow-y-auto" onClick={(e) => e.stopPropagation()}>
+              <div className="bg-white rounded-2xl p-6 shadow-xl border border-gray-100 space-y-6">
+                <div className="flex items-center justify-between">
+                  <h2 className="text-xl font-bold text-gray-900">🔍 Filtros</h2>
+                  <button 
+                    onClick={() => setShowFilters(false)}
+                    className="text-gray-500 hover:text-gray-700 text-xl"
+                  >
+                    ✕
+                  </button>
+                </div>
+                
+                <div className="space-y-4">
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">Tipo de Propiedad</label>
+                    <select 
+                      value={filters.type}
+                      onChange={(e) => setFilters({...filters, type: e.target.value})}
+                      className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    >
+                      <option value="all">Todas</option>
+                      <option value="Casa">Casa</option>
+                      <option value="Departamento">Departamento</option>
+                      <option value="Casa Quinta">Casa Quinta</option>
+                      <option value="Duplex">Duplex</option>
+                    </select>
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">Rango de Precio</label>
+                    <select 
+                      value={filters.priceRange}
+                      onChange={(e) => setFilters({...filters, priceRange: e.target.value})}
+                      className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    >
+                      <option value="all">Todos los precios</option>
+                      <option value="low">Hasta $300.000</option>
+                      <option value="medium">$300.000 - $500.000</option>
+                      <option value="high">Más de $500.000</option>
+                    </select>
+                  </div>
+
+                  <div className="pt-4 border-t">
+                    <p className="text-sm text-gray-600 mb-3">Mostrando {filteredProperties.length} propiedades</p>
+                    
+                    <div className="space-y-3">
+                      {filteredProperties.slice(0, 3).map((property) => (
+                        <div key={property.id} className="flex items-center space-x-3 p-3 bg-gray-50 rounded-lg cursor-pointer hover:bg-gray-100 transition-colors"
+                             onClick={() => {setSelectedProperty(property.id); setShowFilters(false);}}>
+                          <img src={property.image} alt={property.title} className="w-12 h-12 object-cover rounded-lg"/>
+                          <div className="flex-1 min-w-0">
+                            <p className="text-sm font-medium text-gray-900 truncate">{property.title}</p>
+                            <p className="text-sm text-blue-600 font-semibold">${property.price.toLocaleString()}</p>
+                            <p className="text-xs text-gray-500">{property.location}</p>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
-          {/* Sidebar con filtros y lista */}
-          <div className="lg:col-span-1 space-y-6">
+          {/* Sidebar con filtros y lista - Solo desktop */}
+          <div className="lg:col-span-1 space-y-6 hidden lg:block">
             {/* Filtros */}
             <div className="bg-white rounded-2xl p-6 shadow-xl border border-gray-100">
               <h2 className="text-xl font-bold text-gray-900 mb-4">🔍 Filtros</h2>
@@ -190,101 +273,123 @@ const MapView: React.FC = () => {
           </div>
 
           {/* Mapa */}
-          <div className="lg:col-span-3">
+          <div className="col-span-1 lg:col-span-3">
             <div className="bg-white rounded-2xl shadow-xl border border-gray-100 overflow-hidden">
-              {/* Simulación de mapa con propiedades */}
-              <div className="relative h-[600px] bg-gradient-to-br from-green-100 via-blue-50 to-green-50">
-                {/* Fondo del mapa simulado */}
-                <div className="absolute inset-0 opacity-20">
-                  <svg viewBox="0 0 800 600" className="w-full h-full">
-                    {/* Calles simuladas */}
-                    <path d="M0 100 L800 100" stroke="#ccc" strokeWidth="2"/>
-                    <path d="M0 200 L800 200" stroke="#ccc" strokeWidth="2"/>
-                    <path d="M0 300 L800 300" stroke="#ccc" strokeWidth="2"/>
-                    <path d="M0 400 L800 400" stroke="#ccc" strokeWidth="2"/>
-                    <path d="M0 500 L800 500" stroke="#ccc" strokeWidth="2"/>
-                    <path d="M100 0 L100 600" stroke="#ccc" strokeWidth="2"/>
-                    <path d="M200 0 L200 600" stroke="#ccc" strokeWidth="2"/>
-                    <path d="M300 0 L300 600" stroke="#ccc" strokeWidth="2"/>
-                    <path d="M400 0 L400 600" stroke="#ccc" strokeWidth="2"/>
-                    <path d="M500 0 L500 600" stroke="#ccc" strokeWidth="2"/>
-                    <path d="M600 0 L600 600" stroke="#ccc" strokeWidth="2"/>
-                    <path d="M700 0 L700 600" stroke="#ccc" strokeWidth="2"/>
-                  </svg>
-                </div>
-
-                {/* Marcadores de propiedades */}
-                {filteredProperties.map((property, index) => {
-                  // Posición simulada en el mapa (calculada basándose en el índice)
-                  const x = 100 + (index * 120) + (index % 2 * 80);
-                  const y = 150 + Math.floor(index / 3) * 150 + (index % 2 * 50);
+              {/* Mapa real con Leaflet */}
+              <div className="h-[600px]">
+                <MapContainer
+                  center={[-24.7859, -65.4117]} // Centro de Salta Capital
+                  zoom={13}
+                  style={{ height: '100%', width: '100%' }}
+                  className="rounded-xl"
+                >
+                  <TileLayer
+                    url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                    attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                  />
                   
-                  return (
-                    <div
+                  {/* Marcadores de propiedades */}
+                  {filteredProperties.map((property) => (
+                    <Marker
                       key={property.id}
-                      style={{ left: `${x}px`, top: `${y}px` }}
-                      className={`absolute transform -translate-x-1/2 -translate-y-1/2 cursor-pointer transition-all ${
-                        selectedProperty === property.id ? 'scale-125 z-20' : 'hover:scale-110 z-10'
-                      }`}
-                      onClick={() => setSelectedProperty(selectedProperty === property.id ? null : property.id)}
+                      position={[property.lat, property.lng]}
                     >
-                      {/* Marcador */}
-                      <div className={`w-8 h-8 rounded-full flex items-center justify-center text-white font-bold text-sm shadow-lg ${
-                        selectedProperty === property.id 
-                          ? 'bg-red-500 ring-4 ring-red-200' 
-                          : 'bg-blue-500 hover:bg-blue-600'
-                      }`}>
-                        🏠
-                      </div>
-                      
-                      {/* Tooltip */}
-                      {selectedProperty === property.id && (
-                        <div className="absolute top-10 left-1/2 transform -translate-x-1/2 bg-white p-4 rounded-lg shadow-xl border border-gray-200 w-64 z-30">
+                      <Popup>
+                        <div className="p-2 min-w-[200px]">
                           <img 
                             src={property.image} 
                             alt={property.title}
-                            className="w-full h-32 object-cover rounded-lg mb-3"
+                            className="w-full h-24 object-cover rounded mb-2"
                           />
-                          <h4 className="font-bold text-gray-900 mb-2">{property.title}</h4>
-                          <p className="text-blue-600 font-bold text-lg mb-2">${property.price.toLocaleString()}</p>
-                          <div className="text-sm text-gray-600 mb-3">
-                            <p>📍 {property.location}</p>
-                            <p>🛏️ {property.bedrooms} hab • 🚿 {property.bathrooms} baños • 📐 {property.area}m²</p>
+                          <h3 className="font-bold text-sm text-gray-900 mb-1">{property.title}</h3>
+                          <p className="text-xs text-gray-600 mb-2">{property.location}</p>
+                          <div className="flex justify-between items-center text-xs mb-2">
+                            <span>{property.bedrooms} hab</span>
+                            <span>{property.bathrooms} baños</span>
+                            <span>{property.area} m²</span>
                           </div>
-                          <Link 
-                            to={`/propiedades/${property.id}`}
-                            className="block w-full bg-blue-600 text-white text-center py-2 rounded-lg hover:bg-blue-700 transition-colors"
-                          >
-                            Ver Detalles
-                          </Link>
+                          <div className="flex justify-between items-center">
+                            <span className="text-lg font-bold text-blue-600">
+                              ${property.price.toLocaleString()}
+                            </span>
+                            <Link 
+                              to={`/propiedad/${property.id}`}
+                              className="bg-blue-600 text-white px-2 py-1 rounded text-xs hover:bg-blue-700"
+                            >
+                              Ver más
+                            </Link>
+                          </div>
                         </div>
-                      )}
-                    </div>
-                  );
-                })}
+                      </Popup>
+                    </Marker>
+                  ))}
+                </MapContainer>
 
-                {/* Leyenda del mapa */}
-                <div className="absolute top-4 right-4 bg-white p-4 rounded-lg shadow-lg border border-gray-200">
-                  <h3 className="font-bold text-gray-900 mb-2">🗺️ Leyenda</h3>
-                  <div className="space-y-2 text-sm">
-                    <div className="flex items-center space-x-2">
-                      <div className="w-4 h-4 bg-blue-500 rounded-full"></div>
-                      <span>Propiedades disponibles</span>
-                    </div>
-                    <div className="flex items-center space-x-2">
-                      <div className="w-4 h-4 bg-red-500 rounded-full"></div>
-                      <span>Propiedad seleccionada</span>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Información de la zona */}
-                <div className="absolute bottom-4 left-4 bg-white p-4 rounded-lg shadow-lg border border-gray-200">
-                  <h3 className="font-bold text-gray-900 mb-2">📍 Salta Capital</h3>
-                  <p className="text-sm text-gray-600">Zona: Centro y alrededores</p>
-                  <p className="text-sm text-gray-600">Propiedades: {filteredProperties.length}</p>
+                {/* Botón flotante para filtros solo en móvil */}
+                <div className="absolute top-4 left-4 lg:hidden">
+                  <button 
+                    onClick={() => setShowFilters(!showFilters)}
+                    className="bg-blue-600/90 backdrop-blur-sm text-white p-3 rounded-lg shadow-lg hover:bg-blue-700 transition-colors"
+                    title="Mostrar/Ocultar Filtros"
+                  >
+                    {showFilters ? '✕' : '🔍'}
+                  </button>
                 </div>
               </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Barra de controles del mapa */}
+        <div className="mt-4 bg-white rounded-2xl p-4 shadow-xl border border-gray-100">
+          <div className="flex flex-wrap items-center justify-between gap-4">
+            {/* Leyenda y información */}
+            <div className="flex flex-wrap items-center gap-4">
+              {/* Leyenda */}
+              <div className="flex items-center space-x-4">
+                <span className="text-sm font-medium text-gray-700">Leyenda:</span>
+                <div className="flex items-center space-x-1">
+                  <div className="w-3 h-3 bg-blue-500 rounded-full"></div>
+                  <span className="text-sm text-gray-600">Disponible</span>
+                </div>
+                <div className="flex items-center space-x-1">
+                  <div className="w-3 h-3 bg-red-500 rounded-full"></div>
+                  <span className="text-sm text-gray-600">Seleccionada</span>
+                </div>
+              </div>
+              
+              {/* Contador de propiedades */}
+              <div className="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm font-medium">
+                🏘️ {filteredProperties.length} propiedades mostradas
+              </div>
+            </div>
+            
+            {/* Controles de navegación */}
+            <div className="flex items-center space-x-2">
+              <button 
+                onClick={() => {
+                  // Lógica para centrar el mapa
+                  console.log('Centrar mapa en Salta');
+                }}
+                className="bg-gray-100 hover:bg-gray-200 text-gray-700 px-3 py-2 rounded-lg transition-colors text-sm"
+                title="Centrar en Salta Capital"
+              >
+                🎯 Centrar
+              </button>
+              
+              <button 
+                onClick={() => setSelectedProperty(null)}
+                className="bg-gray-100 hover:bg-gray-200 text-gray-700 px-3 py-2 rounded-lg transition-colors text-sm"
+                title="Limpiar selección"
+              >
+                🧹 Limpiar
+              </button>
+              
+              {selectedProperty && (
+                <div className="bg-green-100 text-green-800 px-3 py-1 rounded-lg text-sm">
+                  ✓ Propiedad seleccionada
+                </div>
+              )}
             </div>
           </div>
         </div>

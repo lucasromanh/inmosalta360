@@ -16,7 +16,7 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({ children, title, subtitle }) 
 
   const navigationItems = [
     { name: 'Dashboard', href: '/admin', icon: '🏠' },
-    { name: 'Propiedades', href: '/propiedades', icon: '🏘️' },
+    { name: 'Propiedades', href: '/admin/propiedades', icon: '🏘️' },
     { name: 'Nueva Propiedad', href: '/admin/propiedades/nueva', icon: '➕' },
     { name: 'CRM', href: '/admin/crm', icon: '👥' },
     { name: 'Reportes', href: '/admin/reportes', icon: '📊' },

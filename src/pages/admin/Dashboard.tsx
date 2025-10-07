@@ -92,7 +92,7 @@ const Dashboard: React.FC = () => {
       description: 'Catálogo completo',
       icon: '�',
       color: 'from-green-50 to-green-100 border-green-200 hover:from-green-100 hover:to-green-200',
-      action: () => navigate('/propiedades')
+      action: () => navigate('/admin/propiedades')
     },
     {
       title: 'Mapa Interactivo',
@@ -585,7 +585,7 @@ const Dashboard: React.FC = () => {
                 <h2 className="text-3xl font-bold text-gray-900 mb-6">🏠 Gestión de Propiedades</h2>
                 
                 <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
-                  <Link to="/propiedades" className="bg-blue-50 hover:bg-blue-100 p-6 rounded-xl border border-blue-200 transition-colors">
+                  <Link to="/admin/propiedades" className="bg-blue-50 hover:bg-blue-100 p-6 rounded-xl border border-blue-200 transition-colors">
                     <div className="text-blue-600 text-4xl mb-3">🏠</div>
                     <h3 className="font-bold text-gray-900">Ver Todas las Propiedades</h3>
                     <p className="text-sm text-gray-600 mt-2">Catálogo completo disponible</p>
@@ -636,7 +636,7 @@ const Dashboard: React.FC = () => {
                       <h4 className="font-semibold">Mapa Interactivo</h4>
                       <p className="text-sm opacity-90">Vista geográfica</p>
                     </Link>
-                    <Link to="/propiedades" className="bg-white/20 hover:bg-white/30 p-4 rounded-lg transition-colors">
+                    <Link to="/admin/propiedades" className="bg-white/20 hover:bg-white/30 p-4 rounded-lg transition-colors">
                       <div className="text-2xl mb-2">📋</div>
                       <h4 className="font-semibold">Catálogo Completo</h4>
                       <p className="text-sm opacity-90">Todas las propiedades</p>

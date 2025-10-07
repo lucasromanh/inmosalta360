@@ -1,8 +1,10 @@
 import React from 'react';
 import { useParams, Link } from 'react-router-dom';
+import { useAuth } from '../../hooks/useAuth';
 
 const PropertyDetail: React.FC = () => {
   const { id } = useParams<{ id: string }>();
+  const { user } = useAuth();
 
   // Datos de ejemplo para la propiedad
   const property = {
@@ -44,9 +46,15 @@ const PropertyDetail: React.FC = () => {
           <Link to="/propiedades" className="text-blue-600 hover:text-blue-800 inline-block">
             ← Volver a propiedades
           </Link>
-          <Link to="/admin" className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors">
-            🏠 Dashboard
-          </Link>
+          {user ? (
+            <Link to="/admin" className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors">
+              🏠 Dashboard
+            </Link>
+          ) : (
+            <Link to="/login" className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors">
+              👤 Iniciar Sesión
+            </Link>
+          )}
         </div>
 
         <div className="bg-white rounded-lg shadow-lg overflow-hidden">

@@ -5,6 +5,7 @@ import PropertyDetail from "../pages/public/PropertyDetail";
 import MapView from "../pages/public/MapView";
 import Dashboard from "../pages/admin/Dashboard";
 import AddProperty from "../pages/admin/AddProperty";
+import AdminPropertyList from "../pages/admin/AdminPropertyList";
 import Clients from "../pages/admin/Clients";
 import Reports from "../pages/admin/Reports";
 import Login from "../pages/auth/Login";
@@ -22,6 +23,7 @@ const AppRouter = () => (
       <Route path="/login" element={<Login />} />
       <Route path="/registro" element={<Register />} />
       <Route path="/admin" element={<PrivateRoute><Dashboard /></PrivateRoute>} />
+      <Route path="/admin/propiedades" element={<PrivateRoute><AdminPropertyList /></PrivateRoute>} />
       <Route path="/admin/crm" element={<PrivateRoute><Clients /></PrivateRoute>} />
       <Route path="/admin/propiedades/nueva" element={<PrivateRoute><AddProperty /></PrivateRoute>} />
       <Route path="/admin/reportes" element={<PrivateRoute><Reports /></PrivateRoute>} />

@@ -28,8 +28,18 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   useEffect(() => {
     const localUser = localStorage.getItem("user");
     const token = localStorage.getItem("token");
+    
     if (localUser && token) {
-      setUser(JSON.parse(localUser));
+      try {
+        const parsedUser = JSON.parse(localUser);
+        setUser(parsedUser);
+      } catch (error) {
+        console.error('Error parseando usuario del localStorage:', error);
+        // Limpiar localStorage si hay error
+        localStorage.removeItem("user");
+        localStorage.removeItem("token");
+        localStorage.removeItem("refreshToken");
+      }
     }
   }, []);
 
