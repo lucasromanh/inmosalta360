@@ -1,9 +1,9 @@
-import React, { useState, useContext } from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { AuthContext } from '../../context/AuthContext';
+import { useAuth } from '../../hooks/useAuth';
 
 const AddProperty: React.FC = () => {
-  const { user, logout } = useContext(AuthContext);
+  const { user, logout } = useAuth();
   const [formData, setFormData] = useState({
     title: '',
     description: '',
@@ -58,14 +58,56 @@ const AddProperty: React.FC = () => {
     setImages(images.filter((_, i) => i !== index));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Simulamos el guardado
-    console.log('Propiedad guardada:', { ...formData, images: images.filter(img => img.trim() !== '') });
-    setShowSuccessMessage(true);
-    setTimeout(() => {
-      setShowSuccessMessage(false);
-    }, 3000);
+    
+    try {
+      // Crear objeto de propiedad con datos completos
+      const newProperty = {
+        id: Date.now().toString(),
+        ...formData,
+        price: parseFloat(formData.price) || 0,
+        bedrooms: parseInt(formData.bedrooms) || 0,
+        bathrooms: parseInt(formData.bathrooms) || 0,
+        area: parseFloat(formData.area) || 0,
+        yearBuilt: parseInt(formData.yearBuilt) || new Date().getFullYear(),
+        garage: parseInt(formData.garage) || 0,
+        images: images.filter(img => img.trim() !== ''),
+        createdAt: new Date().toISOString(),
+        status: 'available'
+      };
+
+      // Guardar en localStorage para simular persistencia
+      const existingProperties = JSON.parse(localStorage.getItem('properties') || '[]');
+      existingProperties.push(newProperty);
+      localStorage.setItem('properties', JSON.stringify(existingProperties));
+
+      console.log('Propiedad guardada exitosamente:', newProperty);
+      setShowSuccessMessage(true);
+      
+      // Resetear formulario después de guardar
+      setTimeout(() => {
+        setShowSuccessMessage(false);
+        setFormData({
+          title: '',
+          description: '',
+          price: '',
+          location: '',
+          bedrooms: '',
+          bathrooms: '',
+          area: '',
+          type: 'Casa',
+          yearBuilt: '',
+          garage: '',
+          features: []
+        });
+        setImages(['']);
+      }, 3000);
+
+    } catch (error) {
+      console.error('Error al guardar propiedad:', error);
+      alert('Error al guardar la propiedad. Inténtalo de nuevo.');
+    }
   };
 
   return (
