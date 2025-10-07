@@ -1,6 +1,6 @@
 import React, { useState, useContext } from 'react';
 import { AuthContext } from '../../context/AuthContext';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 // Mock data for the dashboard
 const mockData = {
@@ -75,6 +75,7 @@ const mockData = {
 
 const Dashboard: React.FC = () => {
   const { user } = useContext(AuthContext);
+  const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState<'overview' | 'analytics' | 'properties'>('overview');
   const [showNotifications, setShowNotifications] = useState(false);
 
@@ -84,21 +85,21 @@ const Dashboard: React.FC = () => {
       description: 'Agregar propiedad al catálogo',
       icon: '🏠',
       color: 'from-blue-50 to-blue-100 border-blue-200 hover:from-blue-100 hover:to-blue-200',
-      action: () => window.location.href = '/admin/propiedades/nueva'
+      action: () => navigate('/admin/propiedades/nueva')
     },
     {
       title: 'Ver Propiedades',
       description: 'Catálogo completo',
       icon: '�',
       color: 'from-green-50 to-green-100 border-green-200 hover:from-green-100 hover:to-green-200',
-      action: () => window.location.href = '/propiedades'
+      action: () => navigate('/propiedades')
     },
     {
       title: 'Mapa Interactivo',
       description: 'Propiedades en mapa',
       icon: '🗺️',
       color: 'from-purple-50 to-purple-100 border-purple-200 hover:from-purple-100 hover:to-purple-200',
-      action: () => window.location.href = '/mapa'
+      action: () => navigate('/mapa')
     },
     {
       title: 'Analytics',
@@ -112,7 +113,7 @@ const Dashboard: React.FC = () => {
       description: 'Gestionar clientes y leads',
       icon: '👥',
       color: 'from-teal-50 to-teal-100 border-teal-200 hover:from-teal-100 hover:to-teal-200',
-      action: () => window.location.href = '/admin/crm'
+      action: () => navigate('/admin/crm')
     },
     {
       title: 'Soporte',
@@ -209,7 +210,7 @@ const Dashboard: React.FC = () => {
                               <div className="flex items-center justify-between mt-2">
                                 <span className="text-xs text-gray-400">{notification.time}</span>
                                 <button 
-                                  onClick={() => window.location.href = notification.route}
+                                  onClick={() => navigate(notification.route)}
                                   className="text-xs bg-blue-100 text-blue-600 px-2 py-1 rounded hover:bg-blue-200 transition-colors"
                                 >
                                   {notification.action}
@@ -271,7 +272,7 @@ const Dashboard: React.FC = () => {
                         onClick={() => {
                           // En un caso real, aquí llamarías a la función logout del contexto
                           localStorage.removeItem('auth_token');
-                          window.location.href = '/login';
+                          navigate('/login');
                         }}
                         className="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50 transition-colors flex items-center space-x-2"
                       >

@@ -4,6 +4,9 @@ import PropertyList from "../pages/public/PropertyList";
 import PropertyDetail from "../pages/public/PropertyDetail";
 import MapView from "../pages/public/MapView";
 import Dashboard from "../pages/admin/Dashboard";
+import AddProperty from "../pages/admin/AddProperty";
+import Clients from "../pages/admin/Clients";
+import Reports from "../pages/admin/Reports";
 import Login from "../pages/auth/Login";
 import Register from "../pages/auth/Register";
 
@@ -18,6 +21,9 @@ const AppRouter = () => (
       <Route path="/login" element={<Login />} />
       <Route path="/registro" element={<Register />} />
       <Route path="/admin" element={<Dashboard />} />
+      <Route path="/admin/crm" element={<Clients />} />
+      <Route path="/admin/propiedades/nueva" element={<AddProperty />} />
+      <Route path="/admin/reportes" element={<Reports />} />
     </Routes>
   </BrowserRouter>
 );
