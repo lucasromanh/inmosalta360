@@ -94,23 +94,24 @@ const testimonials = [
 
 export default function HomePage() {
   const [currentTestimonial, setCurrentTestimonial] = useState(0);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-indigo-50">
       {/* Navigation Bar */}
       <nav className="bg-white/95 backdrop-blur-md shadow-lg border-b sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center py-4">
-            <Link to="/" className="flex items-center space-x-3">
-              <div className="text-3xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+          <div className="flex justify-between items-center py-3 md:py-4">
+            <Link to="/" className="flex items-center space-x-2 md:space-x-3">
+              <div className="text-xl sm:text-2xl md:text-3xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
                 InmoSalta360
               </div>
-              <span className="bg-blue-100 text-blue-800 text-xs font-medium px-2.5 py-0.5 rounded-full">
+              <span className="hidden sm:inline-block bg-blue-100 text-blue-800 text-xs font-medium px-2.5 py-0.5 rounded-full">
                 Inmobiliaria Premium
               </span>
             </Link>
             
-            <div className="hidden md:flex space-x-8">
+            <div className="hidden lg:flex space-x-6 xl:space-x-8">
               <Link to="/" className="text-gray-700 hover:text-blue-600 transition-colors font-medium">Inicio</Link>
               <Link to="/propiedades" className="text-gray-700 hover:text-blue-600 transition-colors font-medium">Propiedades</Link>
               <Link to="/mapa" className="text-gray-700 hover:text-blue-600 transition-colors font-medium">Mapa</Link>
@@ -118,73 +119,120 @@ export default function HomePage() {
               <a href="#contacto" className="text-gray-700 hover:text-blue-600 transition-colors font-medium">Contacto</a>
             </div>
             
-            <div className="flex space-x-3">
+            <div className="hidden md:flex space-x-2 lg:space-x-3">
               <Link 
                 to="/login" 
-                className="text-blue-600 hover:text-blue-800 transition-colors font-medium px-4 py-2 rounded-lg hover:bg-blue-50"
+                className="text-blue-600 hover:text-blue-800 transition-colors font-medium px-3 lg:px-4 py-2 rounded-lg hover:bg-blue-50"
               >
                 Iniciar Sesión
               </Link>
               <Link 
                 to="/registro" 
-                className="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-6 py-2 rounded-lg hover:from-blue-700 hover:to-purple-700 transition-colors font-medium shadow-lg"
+                className="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-4 lg:px-6 py-2 rounded-lg hover:from-blue-700 hover:to-purple-700 transition-colors font-medium shadow-lg text-sm lg:text-base"
               >
-                Registrar Inmobiliaria
+                <span className="hidden lg:inline">Registrar Inmobiliaria</span>
+                <span className="lg:hidden">Registrar</span>
               </Link>
             </div>
+
+            {/* Botón menú móvil */}
+            <button
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              className="md:hidden p-2 rounded-md text-gray-600 hover:text-gray-900 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            >
+              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                {isMobileMenuOpen ? (
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                ) : (
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+                )}
+              </svg>
+            </button>
           </div>
+
+          {/* Menú móvil */}
+          {isMobileMenuOpen && (
+            <div className="md:hidden border-t border-gray-200">
+              <div className="px-2 pt-2 pb-3 space-y-1 bg-white">
+                <Link to="/" className="block text-gray-700 hover:text-blue-600 hover:bg-gray-50 px-3 py-2 rounded-md text-base font-medium" onClick={() => setIsMobileMenuOpen(false)}>
+                  🏠 Inicio
+                </Link>
+                <Link to="/propiedades" className="block text-gray-700 hover:text-blue-600 hover:bg-gray-50 px-3 py-2 rounded-md text-base font-medium" onClick={() => setIsMobileMenuOpen(false)}>
+                  🏘️ Propiedades
+                </Link>
+                <Link to="/mapa" className="block text-gray-700 hover:text-blue-600 hover:bg-gray-50 px-3 py-2 rounded-md text-base font-medium" onClick={() => setIsMobileMenuOpen(false)}>
+                  🗺️ Mapa
+                </Link>
+                <a href="#servicios" className="block text-gray-700 hover:text-blue-600 hover:bg-gray-50 px-3 py-2 rounded-md text-base font-medium" onClick={() => setIsMobileMenuOpen(false)}>
+                  🔧 Servicios
+                </a>
+                <a href="#contacto" className="block text-gray-700 hover:text-blue-600 hover:bg-gray-50 px-3 py-2 rounded-md text-base font-medium" onClick={() => setIsMobileMenuOpen(false)}>
+                  📞 Contacto
+                </a>
+                
+                <div className="pt-4 border-t border-gray-200 space-y-2">
+                  <Link to="/login" className="block w-full text-center bg-gray-100 text-gray-700 hover:bg-gray-200 px-3 py-2 rounded-lg font-medium" onClick={() => setIsMobileMenuOpen(false)}>
+                    👤 Iniciar Sesión
+                  </Link>
+                  <Link to="/registro" className="block w-full text-center bg-gradient-to-r from-blue-600 to-purple-600 text-white px-3 py-2 rounded-lg font-medium" onClick={() => setIsMobileMenuOpen(false)}>
+                    ✨ Registrar Inmobiliaria
+                  </Link>
+                </div>
+              </div>
+            </div>
+          )}
         </div>
       </nav>
 
       {/* Hero Section */}
-      <section className="relative py-20 px-4">
+      <section className="relative py-12 sm:py-16 md:py-20 px-4">
         <div className="max-w-7xl mx-auto text-center">
-          <div className="mb-8">
-            <h1 className="text-5xl md:text-7xl font-bold text-gray-900 mb-6">
+          <div className="mb-8 sm:mb-12">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold text-gray-900 mb-4 sm:mb-6">
               Encuentra tu
               <span className="block bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
                 hogar ideal
               </span>
             </h1>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
+            <p className="text-base sm:text-lg md:text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed px-4">
               En <strong>InmoSalta360</strong> te ofrecemos las mejores propiedades en Salta Capital. 
               Con más de 8 años de experiencia, somos tu socio de confianza en el mercado inmobiliario.
             </p>
           </div>
           
           {/* CTA Buttons */}
-          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-12">
+          <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center items-center mb-8 sm:mb-12 px-4">
             <Link 
               to="/propiedades" 
-              className="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-8 py-4 rounded-xl font-semibold text-lg hover:from-blue-700 hover:to-purple-700 transition-all shadow-xl hover:shadow-2xl transform hover:scale-105"
+              className="w-full sm:w-auto bg-gradient-to-r from-blue-600 to-purple-600 text-white px-6 sm:px-8 py-3 sm:py-4 rounded-xl font-semibold text-base sm:text-lg hover:from-blue-700 hover:to-purple-700 transition-all shadow-xl hover:shadow-2xl transform hover:scale-105"
             >
               🏠 Ver Propiedades
             </Link>
             <Link 
               to="/mapa" 
-              className="bg-white text-gray-700 px-8 py-4 rounded-xl font-semibold text-lg border-2 border-gray-200 hover:border-blue-500 hover:text-blue-600 transition-all shadow-lg"
+              className="w-full sm:w-auto bg-white text-gray-700 px-6 sm:px-8 py-3 sm:py-4 rounded-xl font-semibold text-base sm:text-lg border-2 border-gray-200 hover:border-blue-500 hover:text-blue-600 transition-all shadow-lg"
             >
               🗺️ Explorar en Mapa
             </Link>
           </div>
 
           {/* Stats */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 bg-white rounded-2xl p-8 shadow-xl border border-gray-100">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 md:gap-8 bg-white rounded-2xl p-4 sm:p-6 md:p-8 shadow-xl border border-gray-100 mx-4 sm:mx-0">
             <div className="text-center">
-              <div className="text-4xl font-bold text-blue-600 mb-2">{stats.properties}</div>
-              <div className="text-gray-600 font-medium">Propiedades</div>
+              <div className="text-2xl sm:text-3xl md:text-4xl font-bold text-blue-600 mb-1 sm:mb-2">{stats.properties}</div>
+              <div className="text-xs sm:text-sm md:text-base text-gray-600 font-medium">Propiedades</div>
             </div>
             <div className="text-center">
-              <div className="text-4xl font-bold text-green-600 mb-2">{stats.clients}+</div>
-              <div className="text-gray-600 font-medium">Clientes Felices</div>
+              <div className="text-2xl sm:text-3xl md:text-4xl font-bold text-green-600 mb-1 sm:mb-2">{stats.clients}+</div>
+              <div className="text-xs sm:text-sm md:text-base text-gray-600 font-medium">Clientes Felices</div>
             </div>
             <div className="text-center">
-              <div className="text-4xl font-bold text-purple-600 mb-2">{stats.sales}</div>
-              <div className="text-gray-600 font-medium">Ventas Exitosas</div>
+              <div className="text-2xl sm:text-3xl md:text-4xl font-bold text-purple-600 mb-1 sm:mb-2">{stats.sales}</div>
+              <div className="text-xs sm:text-sm md:text-base text-gray-600 font-medium">Ventas Exitosas</div>
             </div>
             <div className="text-center">
-              <div className="text-4xl font-bold text-orange-600 mb-2">{stats.years}</div>
-              <div className="text-gray-600 font-medium">Años de Experiencia</div>
+              <div className="text-2xl sm:text-3xl md:text-4xl font-bold text-orange-600 mb-1 sm:mb-2">{stats.years}</div>
+              <div className="text-xs sm:text-sm md:text-base text-gray-600 font-medium">Años de Experiencia</div>
             </div>
           </div>
         </div>

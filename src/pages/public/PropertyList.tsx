@@ -46,62 +46,62 @@ const PropertyList: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <div className="container mx-auto px-4 py-8">
-        <div className="mb-8">
-          <div className="flex items-center justify-between mb-4">
-            <Link to="/" className="text-blue-600 hover:text-blue-800">
+      <div className="container mx-auto px-4 py-6 sm:py-8">
+        <div className="mb-6 sm:mb-8">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-4 gap-3">
+            <Link to="/" className="text-blue-600 hover:text-blue-800 text-sm sm:text-base">
               ← Volver al inicio
             </Link>
-            <div className="flex space-x-3">
-              <Link to="/mapa" className="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition-colors">
+            <div className="flex flex-col sm:flex-row gap-2 sm:gap-3">
+              <Link to="/mapa" className="bg-green-600 text-white px-3 sm:px-4 py-2 rounded-lg hover:bg-green-700 transition-colors text-center text-sm sm:text-base">
                 🗺️ Ver en Mapa
               </Link>
               
               {user ? (
-                <Link to="/admin" className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors">
+                <Link to="/admin" className="bg-blue-600 text-white px-3 sm:px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors text-center text-sm sm:text-base">
                   🏠 Dashboard
                 </Link>
               ) : (
-                <Link to="/login" className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors">
+                <Link to="/login" className="bg-blue-600 text-white px-3 sm:px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors text-center text-sm sm:text-base">
                   👤 Iniciar Sesión
                 </Link>
               )}
             </div>
           </div>
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">Propiedades Disponibles</h1>
-          <p className="text-gray-600">Encuentra tu propiedad ideal en Salta</p>
+          <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-2">Propiedades Disponibles</h1>
+          <p className="text-gray-600 text-sm sm:text-base">Encuentra tu propiedad ideal en Salta</p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
           {mockProperties.map((property) => (
             <div key={property.id} className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow">
               <img 
                 src={property.image} 
                 alt={property.title}
-                className="w-full h-48 object-cover"
+                className="w-full h-48 sm:h-52 object-cover"
               />
-              <div className="p-6">
+              <div className="p-4 sm:p-6">
                 <div className="mb-2">
                   <span className="bg-blue-100 text-blue-800 text-xs font-medium px-2.5 py-0.5 rounded">
                     {property.type}
                   </span>
                 </div>
-                <h3 className="text-xl font-semibold text-gray-900 mb-2">{property.title}</h3>
+                <h3 className="text-lg sm:text-xl font-semibold text-gray-900 mb-2">{property.title}</h3>
                 <p className="text-gray-600 text-sm mb-4">{property.location}</p>
                 
-                <div className="flex items-center justify-between text-sm text-gray-500 mb-4">
-                  <span>{property.bedrooms} hab.</span>
-                  <span>{property.bathrooms} baños</span>
-                  <span>{property.area} m²</span>
+                <div className="flex items-center justify-between text-xs sm:text-sm text-gray-500 mb-4">
+                  <span>🛏️ {property.bedrooms} hab.</span>
+                  <span>🚿 {property.bathrooms} baños</span>
+                  <span>📐 {property.area} m²</span>
                 </div>
                 
-                <div className="flex items-center justify-between">
-                  <span className="text-2xl font-bold text-blue-600">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                  <span className="text-xl sm:text-2xl font-bold text-blue-600">
                     ${property.price.toLocaleString()}
                   </span>
                   <Link 
                     to={`/propiedad/${property.id}`}
-                    className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 text-sm"
+                    className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 text-sm font-medium transition-colors text-center"
                   >
                     Ver detalles
                   </Link>
@@ -111,13 +111,13 @@ const PropertyList: React.FC = () => {
           ))}
         </div>
 
-        <div className="mt-12 text-center">
-          <p className="text-gray-600 mb-4">¿No encontraste lo que buscabas?</p>
+        <div className="mt-8 sm:mt-12 text-center px-4">
+          <p className="text-gray-600 mb-4 text-sm sm:text-base">¿No encontraste lo que buscabas?</p>
           <Link 
             to="/contacto" 
-            className="bg-gray-800 text-white px-6 py-3 rounded-lg hover:bg-gray-900"
+            className="inline-block bg-gray-800 text-white px-6 py-3 rounded-lg hover:bg-gray-900 transition-colors font-medium"
           >
-            Contáctanos
+            📞 Contáctanos
           </Link>
         </div>
       </div>

@@ -66,19 +66,20 @@ const Register: React.FC = () => {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50">
-      <div className="max-w-md w-full space-y-8 p-6">
-        <div>
-          <Link to="/" className="flex justify-center mb-6">
-            <h1 className="text-3xl font-bold text-blue-600">InmoSalta360</h1>
-          </Link>
-          <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
-            Registrar Inmobiliaria
-          </h2>
-          <p className="mt-2 text-center text-sm text-gray-600">
-            Crea tu cuenta para gestionar propiedades
-          </p>
-        </div>
+    <div className="min-h-screen flex items-center justify-center bg-gray-50 px-4 py-8">
+      <div className="max-w-md w-full space-y-6 sm:space-y-8">
+        <div className="bg-white p-6 sm:p-8 rounded-2xl shadow-xl">
+          <div>
+            <Link to="/" className="flex justify-center mb-4 sm:mb-6">
+              <h1 className="text-2xl sm:text-3xl font-bold text-blue-600">InmoSalta360</h1>
+            </Link>
+            <h2 className="mt-4 sm:mt-6 text-center text-xl sm:text-2xl md:text-3xl font-extrabold text-gray-900">
+              Registrar Inmobiliaria
+            </h2>
+            <p className="mt-2 text-center text-sm text-gray-600">
+              Crea tu cuenta para gestionar propiedades
+            </p>
+          </div>
         <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
           {error && (
             <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded">
@@ -184,6 +185,7 @@ const Register: React.FC = () => {
             </Link>
           </div>
         </form>
+        </div>
       </div>
     </div>
   );

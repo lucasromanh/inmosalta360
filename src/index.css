@@ -49,3 +49,143 @@
     background-color: var(--color-neutral);
   }
 }
+
+/* Estilos específicos para los popups del mapa */
+.leaflet-popup-content-wrapper {
+  border-radius: 12px !important;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15) !important;
+  border: 1px solid #e5e7eb !important;
+}
+
+.leaflet-popup-content {
+  margin: 0 !important;
+  padding: 0 !important;
+  border-radius: 12px !important;
+  overflow: hidden;
+}
+
+.leaflet-popup-tip {
+  background: white !important;
+  border: 1px solid #e5e7eb !important;
+}
+
+.property-popup .leaflet-popup-content-wrapper {
+  min-width: 300px !important;
+}
+
+/* Animación para el botón del popup */
+@keyframes pulse-button {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.02);
+  }
+}
+
+.property-popup a:hover {
+  animation: pulse-button 0.3s ease-in-out;
+}
+
+/* Forzar estilos del botón del popup */
+.leaflet-popup a {
+  background-color: #2563eb !important;
+  color: #ffffff !important;
+  text-decoration: none !important;
+  font-weight: 700 !important;
+  text-shadow: none !important;
+  font-size: 14px !important;
+  line-height: 1.2 !important;
+  border: none !important;
+  outline: none !important;
+}
+
+.leaflet-popup a:hover {
+  background-color: #1d4ed8 !important;
+  color: #ffffff !important;
+  text-decoration: none !important;
+}
+
+/* Asegurar que el texto sea visible en todos los navegadores */
+.leaflet-popup-content a {
+  -webkit-font-smoothing: antialiased !important;
+  -moz-osx-font-smoothing: grayscale !important;
+  text-rendering: optimizeLegibility !important;
+}
+
+/* Estilos específicos para el botón del popup */
+.popup-button {
+  background-color: #ffffff !important;
+  color: #2563eb !important;
+  border: 2px solid #2563eb !important;
+  font-weight: bold !important;
+  text-decoration: none !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.5px !important;
+  -webkit-font-smoothing: antialiased !important;
+  -moz-osx-font-smoothing: grayscale !important;
+  text-rendering: optimizeLegibility !important;
+}
+
+.popup-button:hover {
+  background-color: #2563eb !important;
+  color: #ffffff !important;
+  border: 2px solid #2563eb !important;
+}
+
+.popup-button:focus,
+.popup-button:active {
+  outline: none !important;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.3) !important;
+}
+
+/* Estilos para mejorar responsividad móvil */
+@media (max-width: 640px) {
+  /* Asegurar que el contenido no desborde en móvil */
+  body {
+    overflow-x: hidden;
+  }
+  
+  /* Mejorar spacing en móvil */
+  .container {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+  
+  /* Botones más grandes en móvil para mejor UX */
+  button, .btn {
+    min-height: 44px;
+    min-width: 44px;
+  }
+  
+  /* Texto más legible en móvil */
+  h1 {
+    font-size: 1.75rem !important;
+    line-height: 1.2;
+  }
+  
+  h2 {
+    font-size: 1.5rem !important;
+    line-height: 1.2;
+  }
+  
+  /* Navegación móvil mejorada */
+  .mobile-menu {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 9999;
+  }
+}
+
+/* Mejoras para tablets */
+@media (min-width: 641px) and (max-width: 1024px) {
+  .tablet-responsive {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+}
